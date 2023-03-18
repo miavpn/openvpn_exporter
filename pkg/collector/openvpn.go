@@ -22,6 +22,7 @@ type OpenVPNCollector struct {
 	BytesSent             *prometheus.Desc
 	ConnectedSince        *prometheus.Desc
 	MaxBcastMcastQueueLen *prometheus.Desc
+	RealAddress           *prometheus.Desc
 	ServerInfo            *prometheus.Desc
 	CollectionError       *prometheus.CounterVec
 }
@@ -75,6 +76,12 @@ func NewOpenVPNCollector(logger log.Logger, openVPNServer []OpenVPNServer, colle
 			prometheus.BuildFQName(namespace, "", "connected_since"),
 			"Unixtimestamp when the connection was established",
 			[]string{"server", "common_name", "unique_id"},
+			nil,
+		),
+		RealAddress: prometheus.NewDesc(
+			prometheus.BuildFQName(namespace, "", "real_address"),
+			"A metric with a constant '1' value labeled real address",
+			[]string{"server", "common_name", "unique_id", "real_address"},
 			nil,
 		),
 		ServerInfo: prometheus.NewDesc(
@@ -186,6 +193,11 @@ func (c *OpenVPNCollector) collect(ovpn OpenVPNServer, ch chan<- prometheus.Metr
 				prometheus.GaugeValue,
 				float64(client.ConnectedSince.Unix()),
 				ovpn.Name, client.CommonName, strconv.FormatInt(uniqueId, 10),
+			)
+			ch <- prometheus.MustNewConstMetric(
+				c.RealAddress,
+				prometheus.GaugeValue, 1.0,
+				ovpn.Name, client.CommonName, strconv.FormatInt(uniqueId, 10), client.RealAddress,
 			)
 		}
 	}
