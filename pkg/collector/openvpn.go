@@ -1,12 +1,13 @@
 package collector
 
 import (
+	"strconv"
+
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/log/level"
 	"github.com/prometheus/client_golang/prometheus"
-	"strconv"
 
-	"github.com/patrickjahns/openvpn_exporter/pkg/openvpn"
+	"github.com/ricardoalonso/openvpn_exporter/pkg/openvpn"
 )
 
 // OpenVPNCollector collects metrics from openvpn status files

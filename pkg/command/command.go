@@ -11,9 +11,9 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/urfave/cli/v2"
 
-	"github.com/patrickjahns/openvpn_exporter/pkg/collector"
-	"github.com/patrickjahns/openvpn_exporter/pkg/config"
-	"github.com/patrickjahns/openvpn_exporter/pkg/version"
+	"github.com/ricardoalonso/openvpn_exporter/pkg/collector"
+	"github.com/ricardoalonso/openvpn_exporter/pkg/config"
+	"github.com/ricardoalonso/openvpn_exporter/pkg/version"
 )
 
 // Run parses the command line arguments and executes the program.
@@ -27,6 +27,10 @@ func Run() error {
 			{
 				Name:  "Patrick Jahns",
 				Email: "github@patrickjahns.de",
+			},
+			{
+				Name:  "Ricardo Alonso",
+				Email: "ricardoalonsos@gmail.com",
 			},
 		},
 	}
